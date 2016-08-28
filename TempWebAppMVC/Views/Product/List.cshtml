@@ -1,0 +1,53 @@
+﻿@model TempWebAppMVC.Models.ProductListViewModel
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>List</title>
+</head>
+    <body>
+        <div class="row panel">
+            <div id="categories" class="col-xs-3">
+                @Html.Action("Menu", "Nav")
+            </div>
+            <div class="col-xs-9">
+                @foreach (var p in Model.Products)
+                {
+                    <div class="well">
+                        <h3>
+                            <strong>@p.Name</strong>
+                            <span class="pull-right label label-primary">@p.Price.ToString("c")</span>
+                        </h3>
+                        
+                        @using (Html.BeginForm("AddToCart", "Cart"))
+                        {
+                            <div class="pull-right">
+                                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                                @Html.Hidden("productId", p.ProductId)
+                                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                                <input type="submit" class="btn btn-success" value="Dodaj do koszyka"/>
+                            </div>
+                        }
+
+                        <span class="lead">@p.Description</span>
+                    </div>
+                }
+
+                <div class="pager">
+                    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
+                </div>    
+            </div>
+        </div>
+
+       
+    </body>
+</html>
+
+
+

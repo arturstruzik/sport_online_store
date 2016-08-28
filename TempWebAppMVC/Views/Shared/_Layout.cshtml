@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("Sklep Sportowy", "List", "Product", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Twój koszyk", "Index", "Cart", new { returnUrl = Request.Url.PathAndQuery }, null)</li>
+                
+                    
+                </ul>
+                @if (User.IsInRole("Worker") || User.IsInRole("User"))
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Historia zamówień", "Orders", "Account", null, null)</li>
+                    </ul>
+                }
+                @if (User.IsInRole("Worker"))
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Administracja", "Index", "Admin")</li>
+                    </ul>
+                }
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    
+    <div>
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-success">
+                <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                @TempData["message"]
+            </div>
+        }
+        
+        @if (TempData["message_error"] != null)
+        {
+            <div class="alert alert-danger">
+                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                @TempData["message_error"]
+            </div>
+        }
+    </div>
+
+    <div class="container">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Artur app</p>
+        </footer>
+    </div>
+
+</body>
+</html>

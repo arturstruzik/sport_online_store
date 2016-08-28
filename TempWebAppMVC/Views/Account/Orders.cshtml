@@ -1,0 +1,62 @@
+﻿@using TempWebAppMVC.Models
+@model IEnumerable<TempWebAppMVC.Models.Order>
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+<h4>Historia zamówień</h4>
+
+
+@foreach (var item in Model.Where(x => x.User.Login == User.Identity.Name))
+{
+    <div class="form-horizontal">
+
+        <div class="form-group ">
+            @Html.Label("ID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-1">
+                @Html.EditorFor(modelItem => item.OrderId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+
+        <div class="form-group ">
+            @Html.Label("Data", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(modelItem => item.Date, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+
+        <div class="form-group ">
+            @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(modelItem => item.Status, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+
+        <table class="table table-bordered col-md-8">
+            <tr>
+                <th>Nazwa</th>
+                <th class="text-right">Cena jednostkowa</th>
+                <th class="text-right">Ilość</th>
+            </tr>
+
+            @foreach (var cartLine in item.Carts)
+            {
+                <tr>
+                    <td class="col-md-2">
+                        @Html.DisplayFor(modelItem => cartLine.Product.Name)
+                    </td>
+                    <td class="text-right col-md-2">
+                        @Html.DisplayFor(modelItem => cartLine.Product.Price)
+                    </td>
+                    <td class="text-right col-md-2">
+                        @Html.DisplayFor(modelItem => cartLine.Count)
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <div><br /><br /></div>
+    </div>
+}
+

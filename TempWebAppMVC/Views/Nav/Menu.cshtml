@@ -1,0 +1,19 @@
+﻿@model IEnumerable<TempWebAppMVC.Models.Category>
+
+@Html.ActionLink("Wszystkie", "List", "Product", null, new { @class = "btn btn-block btn-default btn-lg" + (ViewBag.SelectedCategory == null ? " btn-primary" : "") })
+
+@foreach (var link in Model)
+{
+    @Html.RouteLink(link.Name, 
+        new {
+            controller = "Product",
+            action = "List",
+            category = link.CategoryId,
+            page = 1
+        },
+        new {
+            @class = "btn btn-block btn-default btn-lg"
+            + (link.CategoryId.ToString() == ViewBag.SelectedCategory ? " btn-primary" : "")
+        }
+    )
+}

@@ -1,0 +1,46 @@
+﻿@model TempWebAppMVC.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Registration";
+}
+
+<div class="row panel">
+    <div id="categories" class="col-xs-4"></div>
+    <div class="col-xs-4">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-horizontal">
+                <fieldset>
+                    <legend>Utwórz nowego użytkownika</legend>
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Login, new { @class = "col-md-2 control-label" })
+
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(x => x.Login, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Login, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Password, new { @class = "col-md-2 control-label" })
+
+                        <div class="col-md-10">
+                            @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Utwórz użytkownika" class="btn btn-primary" />
+                        </div>
+                    </div>
+
+                </fieldset>
+            </div>
+        }
+    </div>
+    <div id="categories" class="col-xs-4"></div>
+</div>

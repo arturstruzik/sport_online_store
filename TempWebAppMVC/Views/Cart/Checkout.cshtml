@@ -1,0 +1,55 @@
+﻿@model TempWebAppMVC.Models.ShippingDetailsViewModel
+
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<h2 class="panel-heading col-md-offset-3 col-md-9">
+    Podsumowanie zakupu
+    <span class="glyphicon glyphicon glyphicon-usd" aria-hidden="true"></span>
+</h2>
+
+    <h3 class="col-md-offset-3 col-md-9">Kwota do zapłaty</h3>
+    <h2 class="col-md-offset-3 col-md-5">@Model.TotalPrice.ToString("C")</h2>
+
+    <h3 class="panel-heading col-md-offset-3 col-md-9">Adres wysyłki</h3>
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.Label("Ulica", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.User.Address.Street, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.User.Address.Street, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Numer mieszkania", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.User.Address.Number, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.User.Address.Number, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Kod pocztowy", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.User.Address.ZipCode, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.User.Address.ZipCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Miasto", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.User.Address.City, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.User.Address.City, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+
+<div class="panel-footer">
+    @Html.ActionLink("Kup", "Completed", "Cart", new { userId = Model.User.UserId}, htmlAttributes: new { @class = "btn btn-success col-md-offset-3" })
+</div>

@@ -1,0 +1,15 @@
+﻿
+@if (Request.IsAuthenticated)
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.Label(" " + User.Identity.Name + " ", htmlAttributes: new { @class="glyphicon glyphicon-user navbar-text "})</li>
+        <li>@Html.ActionLink(" Wyloguj ", "Logout", "Account", routeValues: null, htmlAttributes: new { @class = "glyphicon glyphicon-log-out" })</li>
+    </ul>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink(" Zarejestruj ", "Registration", "Account", routeValues: null, htmlAttributes: new { @class = "glyphicon glyphicon-user" })</li>
+        <li>@Html.ActionLink(" Zaloguj ", "Login", "Account", routeValues: null, htmlAttributes: new { @class = "glyphicon glyphicon-log-in" })</li>
+    </ul>
+}

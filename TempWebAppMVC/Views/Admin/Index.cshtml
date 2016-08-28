@@ -1,0 +1,63 @@
+﻿@using System.Collections
+@using TempWebAppMVC.Models
+@model IEnumerable<TempWebAppMVC.Models.Product>
+
+@{
+    ViewBag.Title = "All Products";
+}
+
+<div class="panel-heading">
+    <h3>Wszystkie produkty</h3>
+</div>
+
+<div class="panel-body">
+<table class="table table-striped table-condensed table-bordered">
+    <tr>
+        <th class="text-right">ID</th>
+        <th>Nazwa</th>
+        <th>Opis</th>
+        <th>Kategoria</th>
+        <th class="text-right">Ilość</th>
+        <th class="text-right">Cena</th>
+        <th class="text-center">Edytuj</th>
+        <th class="text-center">Usuń</th>
+    </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.ProductId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+            <td class="text-right">
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td class="text-center">
+                @Html.ActionLink("Edytuj", "Edit", "Admin", new { productId = item.ProductId }, new { @class = "btn btn-default btn-xs"})
+            </td>
+            <td class="text-center">
+                @using (Html.BeginForm("Delete", "Admin"))
+                {
+                    @Html.Hidden("ProductId", item.ProductId)
+                    <input type="submit" class="btn btn-default btn-xs" value="Usuń"/>
+                }
+            </td>
+        </tr>
+    }
+</table>
+</div>
+
+<div class="panel-footer text-center">
+    @Html.ActionLink("Dodaj nowy", "Create", null, new {@class = "btn btn-default"})
+</div>

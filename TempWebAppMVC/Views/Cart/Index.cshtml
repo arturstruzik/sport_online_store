@@ -1,0 +1,63 @@
+﻿@model TempWebAppMVC.Models.CartModel
+
+@{
+    ViewBag.Title = "Sports store user cart";
+}
+
+<h2>
+    Twój koszyk
+    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th class="text-right">Cena</th>
+            <th class="text-right">Ilość</th>
+            <th class ="text-right">Suma</th>
+            <th class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.Lines)
+        {
+            <tr>
+                <td>@line.Product.Name</td>
+                <td class="text-right">@line.Product.Price</td>
+                <td class="text-right">@line.Quantity</td>
+                <td class="text-right">@(line.Quantity * line.Product.Price)</td>
+                <td class="text-center">
+                    @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                    {
+                        <div class="pull-right">
+                            @Html.Hidden("productId", line.Product.ProductId)
+                            @Html.Hidden("returnUrl", (object)ViewBag.ReturnUrl)
+                            <input type="submit" class="btn btn-default" value="Usuń" />
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3"></td>
+            <td class="text-right">@Model.ComputeTotalValue().ToString("C")</td>
+            <td class="text-right">
+                @using (Html.BeginForm("ClearCart", "Cart"))
+                {
+                    @Html.Hidden("returnUrl", (object)ViewBag.ReturnUrl)
+                    <input type="submit" class="btn btn-danger" value="Wyczyść koszyk" />
+                }
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="panel-footer">
+    <a class="btn btn-primary" href="@ViewBag.ReturnUrl">Kontynuuj zakupy</a>
+    @Html.ActionLink("Do kasy", "Checkout", "Cart", null, htmlAttributes: new { @class = "btn btn-success" })
+</div>
+
+    
